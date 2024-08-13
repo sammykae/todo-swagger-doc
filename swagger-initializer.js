@@ -1,9 +1,10 @@
 window.onload = function () {
   //<editor-fold desc="Changeable Configuration Block">
+  console.log(window.location);
 
   // the following lines will be replaced by docker/configurator, when it runs in a docker-container
   window.ui = SwaggerUIBundle({
-    url: `${window.location.host}/todo.json`,
+    url: `${window.location.origin}/todo.json`,
 
     dom_id: "#swagger-ui",
     deepLinking: true,
