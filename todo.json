@@ -1,0 +1,298 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Todo Server docs",
+    "description": "This is a simple todo server that provide basic CRUD operation.\n\nYou can:\n- get all todos\n- create a todo\n- update a todo\n- change the (completed) status of the todo\n- delete a todo",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://todo-server-2vvq.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Todo",
+      "description": "Simple todo api"
+    }
+  ],
+  "paths": {
+    "/todo": {
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "Get all todo from the server",
+        "description": "This is a get request that returns saved todo in the database",
+        "operationId": "getTodo",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoResponses"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "Creates a todo",
+        "description": "This endpoint creates a new todo and save in the database",
+        "operationId": "creatTodo",
+        "requestBody": {
+          "description": "Create a new todo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TodoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing todo title"
+          }
+        }
+      }
+    },
+    "/todo/{todoId}": {
+      "delete": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "Deletes a todo",
+        "description": "This endpoint takes in the _id of the todo to be deleted",
+        "operationId": "deleteTodo",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "description": "Todo id to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error Deleting todo"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "change completed status",
+        "description": "This endpoint changes the status of a todo from 'true' to 'false' and vice versa",
+        "operationId": "updateStatus",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "description": "todo id to update status",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatutsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error updating todo"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "Updates a todo",
+        "description": "This endpoint updates the title and description of a todo",
+        "operationId": "updateTodo",
+        "parameters": [
+          {
+            "name": "todoId",
+            "in": "path",
+            "description": "name that need to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update an existent user in the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error updating todo"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TodoBody": {
+        "required": [
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "wash the car"
+          },
+          "desc": {
+            "type": "string",
+            "example": "something about something"
+          }
+        }
+      },
+      "SingleResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "TodoResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Todo added successfully"
+          },
+          "data": {
+            "$ref": "#/components/schemas/SingleResponse"
+          }
+        }
+      },
+      "DeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Todo deleted successfully"
+          },
+          "todo": {
+            "$ref": "#/components/schemas/SingleResponse"
+          }
+        }
+      },
+      "StatutsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Status changed successfully"
+          },
+          "todo": {
+            "$ref": "#/components/schemas/SingleResponse"
+          }
+        }
+      },
+      "UpdateResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Todo updated successfully"
+          },
+          "todo": {
+            "$ref": "#/components/schemas/SingleResponse"
+          }
+        }
+      },
+      "TodoResponses": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SingleResponse"
+        }
+      }
+    },
+    "requestBodies": {
+      "Todo": {
+        "description": "Todo object that needs to be added to database",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TodoBody"
+            }
+          }
+        }
+      }
+    }
+  }
+}
