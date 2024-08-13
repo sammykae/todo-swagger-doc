@@ -156,7 +156,7 @@
           {
             "name": "todoId",
             "in": "path",
-            "description": "name that need to be deleted",
+            "description": "Todo id to update",
             "required": true,
             "schema": {
               "type": "string"
@@ -164,7 +164,7 @@
           }
         ],
         "requestBody": {
-          "description": "Update an existent user in the store",
+          "description": "Update a todo",
           "content": {
             "application/json": {
               "schema": {
