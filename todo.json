@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Todo Server docs",
-    "description": "This is a simple todo server that provide basic CRUD operation.\n\nYou can:\n- get all todos\n- create a todo\n- update a todo\n- change the (completed) status of the todo\n- delete a todo",
+    "description": "This is a simple todo server that provide basic CRUD operation.\n\nYou can:\n- get all todos\n- create a todo\n- update a todo\n- change the (completed) status of the todo\n- delete a todo\n\nThe base url is : https://todo-server-2vvq.onrender.com",
     "version": "1.0.0"
   },
   "servers": [
